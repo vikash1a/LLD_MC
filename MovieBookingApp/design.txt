@@ -1,0 +1,16 @@
+This project will contain  both lld and mc.
+
+features,
+    crud theaters,movies ,user
+    list movies
+    list theaters
+    movies/theaters
+    theaters/shows
+    book movie
+
+models,
+    user - id, name
+    movies - id , name
+    theater- id , name , location, capacity
+    show  - id, theaterId, movieId, startTime, endTime, remainingSeats
+    ticket - id,showId,userId
