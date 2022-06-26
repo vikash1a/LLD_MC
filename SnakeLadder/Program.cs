@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
+/*
+next
+    class for board and dice may be created for more flexiblity
+*/
 namespace SnakeLadder
 {
     class Program
