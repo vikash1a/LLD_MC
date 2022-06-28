@@ -1,0 +1,13 @@
+token bucket
+    assign fixed no of token per unit time for each user
+    subtract token each time request id hit
+    if no token is left then reject request
+
+fixed counter
+    maintain count of request per unit time per user
+
+sliding logs
+    maintain sliding window history of logs per unit time per user
+
+sliding window  
+    maintain sliding counter with timestamp per user
