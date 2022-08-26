@@ -1,0 +1,31 @@
+feature,
+    able to create group
+    user should be able to add expense and shares
+    user should be able to settle their due
+    
+bonus feature,
+    notify user
+
+Model,
+    User - name, TotalDues
+    Group  - name
+    UserGroupJunction - User, Group
+    BalanceSheet - fromUser, toUser, Amount
+    Expense - amount, List<Split> splits, paidByUser
+    Split - User
+    EqualSplit : split
+    PercentageSplit : Split =  percentage
+    ExactSplit : Split -  amount
+
+ExpenseService
+
+
+ExpenseManager,
+    bool RecordExpense( amount, paidByUser, list<split> )
+    List<User(userID, amount)> GetOwedAmount(userId)
+
+
+Ef Core Supports only primitive data types6 - int , float, double, bool, string, char, short , object
+
+
+

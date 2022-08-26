@@ -1,0 +1,16 @@
+
+ilogger
+loggerManager - singelton
+    log ( message)
+    logInfo
+    logerror
+    subscribe(listener);
+    unsubscribe()
+
+ilistener
+    update
+
+listener - all singelton
+    Con listener
+    error listener
+    debug listener
