@@ -4,3 +4,4 @@ topic,
     MessageQueue - multithreading involved, try later
     splitWise - mostly complete
     TicTacToe - done
+    LogisticSystem - done

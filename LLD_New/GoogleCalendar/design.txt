@@ -1,0 +1,26 @@
+Design a calendar Application (similar on lines with Google's Calendar)
+It should support the following functionalities:
+    Ability to create, update, delete an Event
+        a. An event would typically consist of {start, end, location, Owner, user-list, title}.
+        b. Events can either be like meetings(with a dedicated location and appropriate guest-list)
+         or as well be like holidays, birthdays, reminders etc.
+        c. An event once created, can be either accepted or rejected by the constituent users -
+         if neither it should be in neutral state.
+    Get Calendar for a user Ui
+    Get Event details.
+    For a given set of users[U1, U2,....Un] identity a common free slot of time.
+
+models
+    event - title, starttime, endtime
+    MeetingEvent : Event - Organizer,List<EventUser>,meetingtype, location
+    OtherEvent : Event
+    EventUser - event ,user, acceptanceStatus
+    user - name, email
+    meetingType enum - online , offline
+    location - room no , building 
+
+services
+    addEvent (event) => event id 
+    updateStatus(userId,eventId)
+    getCalendar(userID)=>list<event>
+    getEventDetails(eventId)=>eventId

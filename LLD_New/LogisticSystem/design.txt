@@ -1,0 +1,25 @@
+• The system can take an order to deliver it to a given destination. 
+• The order will be a list of items and there is a cost of each order to process. 
+• User has to register himself / herself to use this system. 
+• User can track his / her order. 
+• Orders will be shipped by bike or truck, but only a single order will be shipped by a single vehicle.
+
+Method
+    order(List(itemName,wieight),sourceLocation, destLocation,user,deliveryType,payment) -> orderId
+    register(name,mobile,email,address)->userId
+    track(orderId)-> location(city,state)
+
+internal service - check if order need to be picked and assign vehicle
+    updateVehicleLocation(vehicle, location)
+
+Models
+    User - name,mobile,email,location,userType
+    //userType-Customer,Staff
+    order - List<pair<string,int>> items,sourceLocation, destLocation, user,deliveryType,orderStatus,vehicle,payment
+    orderStatus - Booked, Packed, Shipped, Delivered, Cnacelled
+    deliveryType enum - Economy, Standard, Premium
+    location - address,city,state,pincode
+    Vehicle - name, vehicleType,isAvailble,currentLocation
+    vehicle Type - bike , truck
+    Payment - Status,mode,amount
+    DeliveryCharge enum - Economy, Standard, Premium - per kg, km
