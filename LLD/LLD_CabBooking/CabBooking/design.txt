@@ -1,0 +1,73 @@
+Problem Statement:
+    We want to build a cab booking platform to allow a rider to book a cab.
+
+    Details:
+        The location is represented as a (x, y) coordinate.
+        Distance between two points (x1, y1) and(x2, y2) is sqrt((x1-x2)^2 + (y1-y2)^2)
+        Platform has decided upon maximum distance a driver has to travel to pickup a rider.
+        A cab has only 1 driver.
+        Sharing of cab is not allowed between riders
+        There is a single type of cab
+
+    Please build an application that exposes following features to riders and drivers.
+        Register a rider.
+        Register a driver/cab
+        Update a cab's location
+        A driver can switch on/off his availability
+        A rider can book a cab
+        Fetch history of all rides taken by a rider.
+        End the Trip
+
+    Expectation from this round
+        Demonstrable code is first expectation. To do this, you can choose any interface you are comfortable with - CLI, WebApp, MobileApp, APIs or even simply run the code via Tests or a main method.
+        Code should be extensible.
+        Clean professional level code.
+        Functional Completeness including good modelling.
+        User Identification but not authentication.
+        Backend Database is optional. However modelling should be complete.
+
+Design
+    Features
+        public string registerRider(Rider rider,Location location);
+        public string registerDriver(Driver driver,Location location);
+        public void updateCabLocation(string driverId, int locationX, int locationY);
+        public void updateAvailability(string driverId,  bool isAvailable);
+        public string bookCab(string riderId);
+        public List<Trip> fetchHistory(string riderId);
+        public void endTrip(string tripId);
+    Model
+        public class Rider : BaseModel
+        {
+            public string Name { get; set; }
+            public string LocatoinId { get; set; }
+        }
+        public class Driver : BaseModel
+        {
+            public string Name { get; set; }
+            public bool IsAvailable { get; set; }
+            public string LocatoinId { get; set; }
+        }
+        public class Trip : BaseModel
+        {
+            public string RiderId { get; set; }
+            public string DriverId { get; set; }
+            public DateTime? StartTime { get; set; } = DateTime.Now;
+            public DateTime? EndTime { get; set; }
+            public bool IsTripEnded { get; set; } = false;
+        }
+        public class Location : BaseModel
+        {
+            public string PersonId { get; set; }
+            public int LocationX { get; set; }
+            public int LocationY { get; set; }
+        }
+        public class BaseModel
+        {
+            public string Id { get; set; } = Guid.NewGuid().ToString();
+        }
+
+Possible modification
+    use strategy service for picking the cab    
+    common user base class for driver and rider
+    repository layer can be added
+    use cab in place of driver

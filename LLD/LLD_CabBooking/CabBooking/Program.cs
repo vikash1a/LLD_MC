@@ -149,7 +149,6 @@ namespace LLD_CabBooking
         }
     }
     //Model
-
     public class Rider : BaseModel
     {
         public string Name { get; set; }
