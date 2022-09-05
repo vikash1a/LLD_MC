@@ -1,0 +1,3 @@
+Improvement,
+    use base model for id
+    state design pattern for vending machine

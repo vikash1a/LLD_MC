@@ -1,3 +1,10 @@
 Problems
     CabBooking (Ola/Uber) - revised
     CacheSystem - revised
+    vending machine - revised   
+        improvement pending
+    parking lot  - not done
+    MovieBooking
+        revised
+        improvement remaining
+    RateLimiter 

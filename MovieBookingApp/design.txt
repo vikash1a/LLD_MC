@@ -14,3 +14,7 @@ models,
     theater- id , name , location, capacity
     show  - id, theaterId, movieId, startTime, endTime, remainingSeats
     ticket - id,showId,userId
+
+Improvement 
+    Currently it is assumed it is single screen, multiple screen can be added
+    
