@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
-
+using CabBooking;
 namespace LLD_CabBooking
 {
     class Program
@@ -10,17 +10,19 @@ namespace LLD_CabBooking
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            ICabBookingApp cabBookingApp = new CabBookingApp();
-            Location location3 = new Location(){
-                LocationX = 3,
-                LocationY = 1
-            };
-            string riderId = cabBookingApp.registerRider(new Rider(){
-                Name = "vikash",LocatoinId = location3.Id
-            },location3);
-            string selectedDriverid = cabBookingApp.bookCab(riderId);
-            Console.WriteLine("selectedDriverid - "+selectedDriverid);
-            return;
+            MainDriver mainDriver = new MainDriver();
+            mainDriver.test();
+            // ICabBookingApp cabBookingApp = new CabBookingApp();
+            // Location location3 = new Location(){
+            //     LocationX = 3,
+            //     LocationY = 1
+            // };
+            // string riderId = cabBookingApp.registerRider(new Rider(){
+            //     Name = "vikash",LocatoinId = location3.Id
+            // },location3);
+            // string selectedDriverid = cabBookingApp.bookCab(riderId);
+            // Console.WriteLine("selectedDriverid - "+selectedDriverid);
+            // return;
         }
     }
     public interface ICabBookingApp

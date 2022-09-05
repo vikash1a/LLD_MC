@@ -70,4 +70,5 @@ Possible modification
     use strategy service for picking the cab    
     common user base class for driver and rider
     repository layer can be added
-    use cab in place of driver
+
+All above modifcation done

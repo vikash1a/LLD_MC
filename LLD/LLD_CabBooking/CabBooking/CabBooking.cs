@@ -5,9 +5,9 @@ using static System.Math;
 
 namespace CabBooking
 {
-    public class Driver{
+    public class MainDriver{
         public void test(){
-            
+            Console.WriteLine("In test method");
         }
     }
 
