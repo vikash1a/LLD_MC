@@ -5,6 +5,12 @@ using static System.Math;
 
 namespace CabBooking
 {
+    public class Driver{
+        public void test(){
+            
+        }
+    }
+
     //main app
     public interface ICabBookingApp
     {
@@ -54,32 +60,44 @@ namespace CabBooking
 
         public void endTrip(string tripId)
         {
-            throw new NotImplementedException();
+            Trip trip = tripRepository.GetTrip(tripId);
+            trip.IsTripEnded = true;
+            trip.EndTime = DateTime.Now;
+            driverRepository.GetDriver(trip.driverId).isAvailable = true;
         }
 
         public List<Trip> fetchHistory(string riderId)
         {
-            throw new NotImplementedException();
+            throw NotImplementedException();
         }
 
-        public string registerDriver(Driver driver, Location location)
+        public string registerDriver(Driver driver,Location location)
         {
-            throw new NotImplementedException();
+            driverRepository.CreateDriver(driver);
+            location.PersonId = driver.Id;
+            locationRepository.CreateLocation(location);
+            return driver.Id;
         }
 
-        public string registerRider(Rider rider, Location location)
+        public string registerRider(Rider rider,Location location)
         {
-            throw new NotImplementedException();
+            riderRepository.CreateDriver(rider);
+            location.PersonId = rider.Id;
+            locationRepository.CreateLocation(location);
+            return rider.Id;
         }
 
         public void updateAvailability(string driverId, bool isAvailable)
         {
-            throw new NotImplementedException();
+            driverRepository.GetDriver(driverId).isAvailable = isAvailable;
         }
 
         public void updateCabLocation(string driverId, int locationX, int locationY)
         {
-            throw new NotImplementedException();
+            string locationId = driverRepository.GetDriver(driverId).LocatoinId;
+            Location location = locationRepository.GetLocation(locationId);
+            location.LocationX = locationX;
+            location.LocationY = locationY;
         }
     }
     //Startegy
