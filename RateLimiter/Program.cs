@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 
+//below implementaion is for sliding window logs
+
 namespace RateLimiter
 {
     class Program

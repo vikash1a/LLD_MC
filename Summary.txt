@@ -1,10 +1,35 @@
+
+
 Problems
-    CabBooking (Ola/Uber) - revised
-    CacheSystem - revised
-    vending machine - revised   
+    CabBooking (Ola/Uber) 
+        revised
+    CacheSystem 
+        revised
+    vending machine 
+        revised   
         improvement pending
-    parking lot  - not done
+    parking lot  
+        not done
     MovieBooking
         revised
         improvement remaining
     RateLimiter 
+        revised 
+        improvement pending
+    SnakeLadder
+        revised 
+        improvement pending
+    CarRental
+        done
+    Logger
+        done
+    MessageQueue
+       multithreading involved, try later
+    splitWise
+        mostly complete
+    TicTacToe 
+        done
+    LogisticSystem
+        done
+    Google Calendar
+        done

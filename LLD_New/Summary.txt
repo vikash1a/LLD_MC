@@ -1,7 +1,15 @@
 topic,
     CarRental
+        done
     Logger
-    MessageQueue - multithreading involved, try later
-    splitWise - mostly complete
-    TicTacToe - done
-    LogisticSystem - done
+        done
+    MessageQueue
+       multithreading involved, try later
+    splitWise
+        mostly complete
+    TicTacToe 
+        done
+    LogisticSystem
+        done
+    Google Calendar
+        done
