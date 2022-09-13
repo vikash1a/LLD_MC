@@ -41,5 +41,27 @@ Problem Statement
 
     System should be provide APIs to search for vechicles booked by users by user id and for a particular interval.
 
+revision 
+    user
+        registerUser(User)=>userId
+        searchCar (carType,startTime,endTime) =>List<Car>
+        bookCar (userId,driverId,carType,startTime,endTime,List<AddOn>) => status
+        doPayment (bookingId, paymentAmount, paymentMethod) => status
+        cancelBooking (bookingId)=>status
+        updateBooking (bookingId,carType,startTime,endTime,List<AddOn>)=>status
+        getBooking (userId)=>List<Booking>
+    Driver
+        updateAvailability (driverId,availability)=>status
+        updateLocaiton (driverId,location)=>status
+    
+    Model
+        User -  name, email, address, phone
+        Customer : User 
+        Driver : User - location, carId, driverStatus(available,booked,notAvailable)
+        Booking - userId, driverId, startTime, endTime, paymentId, paymentStatus, bookingStatus(booked,Completed,Cancelled)
+        payment - Amount ,Mode,datetime, transactionNo
+        location - lat,long
+        Car - name, carType (small,medium,Large), capacity, PricePerKm
+
 
 
