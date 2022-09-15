@@ -1,0 +1,20 @@
+https://github.com/anomaly2104/lld-parking-lot/blob/master/problem-statment.md
+
+Ps,
+    given a parking lot 
+    capacity n cars
+    each slot has its distance from entry point
+    ticket - car number , color, slot
+    nearest slot should be given
+    at exit customer returns ticket
+
+Design,
+    park(regNo, color) = > slotNo
+    leave(slotNo)=>void
+    status => List<solt regNo color>
+    otherQueries
+
+    Model
+        Ticket - CarId,SlotId,StartTime,Status (Parked,Left)
+        Car - Color, regNo
+        Slot- No, Status(Occupied, Available, NotAvailable), distanceFromEntry

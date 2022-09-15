@@ -9,7 +9,7 @@ Problems
         revised   
         improvement pending
     parking lot  
-        not done
+        done
     MovieBooking
         revised
         improvement remaining
@@ -24,16 +24,21 @@ Problems
         revised
     Logger
         done
+        revised
     MessageQueue
        multithreading involved, try later
     splitWise
         mostly complete
     TicTacToe 
         done
+        revised
     LogisticSystem
         done
     Google Calendar
         done
+
+future Problems,
+    ATM
 
 
 
