@@ -1,0 +1,15 @@
+feature,
+    user, insert card -> (cardNo) => status
+    user, insert pin -> (pin)=>status
+    user, cancel => ()=> status
+    user , check balance => ()=> amount
+    user ,withdraw money => (amount)=>status
+    admin ,update notes count=> (List<note, count>)=>status
+    admin ,atm state => (state)=>status
+
+model
+    state - outOfService, inUse, avaialble
+
+avaialble
+    insertcard if true state inUse
+

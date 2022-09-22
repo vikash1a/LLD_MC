@@ -26,7 +26,8 @@ Problems
         done
         revised
     MessageQueue
-       multithreading involved, try later
+        done
+       multithreading pending
     splitWise
         mostly complete
     TicTacToe 
@@ -39,6 +40,18 @@ Problems
 
 future Problems,
     ATM
+    true caller
+    amazon locker
+    distributed id generator , snowflake
+    chess
+    Online Book reader
+    Configuration management
+    map navigator
+    json parser from scratch
+    elavator
+    cricbuzz
+    pintrest
+    e-commerce review
 
 
 
