@@ -27,7 +27,7 @@ Problems
         revised
     MessageQueue
         done
-       multithreading pending
+        multithreading pending
     splitWise
         mostly complete
     TicTacToe 
@@ -37,6 +37,11 @@ Problems
         done
     Google Calendar
         done
+    ATM 
+        done 
+        pending using state desing pattern
+    Chess
+        partially Done (interface Done, implementation pending)
 
 future Problems,
     ATM

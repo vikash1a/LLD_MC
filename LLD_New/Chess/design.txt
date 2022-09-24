@@ -1,0 +1,15 @@
+feature
+    two player be able to play
+
+design 1
+    StraightMoves : moves-> direction, maxIncrement, isAllowed(i,j) => bool
+    direction (enum ) - left, right, up, down , diagonal
+    NonStraightMoves : moves->  isAllowed(i,j) => bool
+    piece -> List<move> moves
+
+design 2
+    piece -> color, currentPosition (x,y), isAllowed(i,j)=> bool
+    soldier : piece, elephant : piece and so on ...
+    ChessBoard -> Dictionary<pair<int,int>,piece> dict, start(), play()
+
+
