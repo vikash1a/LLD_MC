@@ -21,21 +21,37 @@ namespace Atm
             Console.WriteLine("res - "+res);
         }
     }
-    public interface IAtm{
+    
+    public interface IAtmState{
         public string  insertCard(string cardNo);
         public string  insertPin(int pin);
         public string  checkBalance();
         public string  withdrawMoney(int amount);
         public string  cancel();
     }
+    public class AvaialbleState : IAtmState{
+        
+    }
+    public class Atm{
+        public IAtmState atmState;
+        public AtmContext(){
+            this.atmState = atmState;
+        }
+        public string  insertCard(string cardNo){
+            this.atmState.insertCard(cardNo);
+        }
+        public string  insertPin(int pin);
+        public string  checkBalance();
+        public string  withdrawMoney(int amount);
+        public string  cancel();
+
+    }
     public class Atm : IAtm
     {
         private State state;
         private bool  isLoggedIn = false;
         private string cardNumber = null;
-        private Dictionary<string,User> users = new Dictionary<string, User>();
-        private CashBox cashBox = new CashBox();
-        private List<Note> notes = new List<Note>();
+       
         public Atm(){
             this.state = State.Available;
             User user1 = new User(){
@@ -115,7 +131,12 @@ namespace Atm
             return "Seesion Cancelled";
         }
     }
-
+    //database
+    public class RepoManager{
+        public Dictionary<string,User> users = new Dictionary<string, User>();
+        public CashBox cashBox = new CashBox();
+        public List<Note> notes = new List<Note>();
+    }
 
     //Model
     public enum State{
