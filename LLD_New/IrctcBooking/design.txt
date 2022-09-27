@@ -1,0 +1,42 @@
+IRCTC Ticket booking service,
+services,
+    bookTicket(userID,List<passenger>,noOfSeat,TrainJourneyInstanceId,Class,FromStation, ToStation) => 
+        ticketId,status,List<Seat>,List<passenger>,noOfSeat,Class,FromStation, ToStation
+        query,
+            select noOfSeatAvailable, noOfCoach from SeatsAvailable where TrainJourneyInstanceId = @TrainJourneyInstanceId and class = @class 
+                and FromStation = @FromStation and ToStation = @ToStation
+            if(noOfCoach == 0)return "Seats Not Available"
+            if(noOfSeatAvailable < noOfSeat){
+                select Seats.noOfSeat as fixedNoOfSeat from TrainJourneyInstance where id = @TrainJourneyInstanceId
+                  inner join   TrainJourney on TrainJourney.id = TrainJourneyInstance.id 
+                  inner join Seats on Seats.TrainId =  TrainJourney.TrainId where class = @class
+
+                update SeatsAvailable set noOfSeatAvailable = @(fixedNoOfSeat-(noOfSeat-noOfSeatAvailable)), noOfCoachAvailable = noOfCoachAvailable-1,
+                 where TrainJourneyInstanceId = @TrainJourneyInstanceId and class = @class  
+
+                //from here i will have List<(CoachNo,SeatNo)> li
+            }
+            insert into booking (userId,TrainJourneyInstanceId,FromStation,ToStation,class, noOfSeats, status) values 
+                (@userId,@TrainJourneyInstanceId,@FromStation,@ToStation,@class, @noOfSeats, @status), ()
+            insert into passenger ( Name, Dob, Age, Gender) values  ( @Name, @Dob, @Age, @Gender),()
+            insert into bookedPassenger (BookingId,passengerId, SeatNo, CoachNo) values
+             (@BookingId,@passengerId, li[0].SeatNo, li[0].CoachNo,Booked),()
+             
+
+    viewTicket(ticketId) => status,List<Seat>,List<passenger>,noOfSeat,TrainJourneyId,Class,FromStation, ToStation
+    cancelTicket(ticketId)=> status
+    searchTrains(FromStation, ToStation,Date,class (optional)) =>
+        List<TrainJourney(Id,TrainName,arrivalTime,DepartureTime,List<AvlSeat(class, SeatNo)>)>
+
+model,
+    Train - Id, Name, Number, Type (express, superfast)
+    Seats - Id, TrainId, Class, noOfSeat,noOfCoach
+    TrainJourney -Id, TrainId,StartDay(week), EndDay(week)
+    Stoppage - Id, TrainJourneyId,stopId, arrivalTime, departureTime
+    Stops - id,Name, Type(Junction/Halt), NoOfPlatform
+
+    TrainJourneyInstance - Id, TrainJourneyId, startDate, endDate,seatsAvailable
+    SeatsAvailable - Id, TrainJourneyInstanceId, Class, FromStation, ToStation,noOfSeatAvailable,noOfCoachAvailable
+    Booking - Id, userId, TrainJourneyInstanceId, FromStation, ToStation,class, noOfSeats, status(booked,cancelled)
+    BookedPassenger - Id,BookingId,passengerId, SeatNo, CoachNo
+    passenger - Id, Name, Dob, Age, Gender

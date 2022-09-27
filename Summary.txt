@@ -44,19 +44,23 @@ Problems
         partially Done (interface Done, implementation pending)
 
 future Problems,
-    ATM
     true caller
     amazon locker
-    distributed id generator , snowflake
-    chess
+    distributed id generator , snowflake - solution learnt, implement later
     Online Book reader
     Configuration management
     map navigator
-    json parser from scratch
+    json parser from scratch - can be done
     elavator
     cricbuzz
     pintrest
     e-commerce review
+
+for most problem skeleton,
+    1. MainLogicClass - similar to controller
+    2. Model - DB Schema detail
+    3. DbManager - db storage detail
+    4. service  - if any extra logic is required 
 
 
 
