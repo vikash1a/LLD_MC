@@ -59,9 +59,13 @@ future Problems,
 for most problem skeleton,
     1. MainLogicClass - similar to controller
     2. Model - DB Schema detail
-    3. DbManager - db storage detail
-    4. service  - if any extra logic is required 
+    3. {ModelName}Service - db storage detail
+    4. {Additional}Service  - if any extra logic is required 
 
+Revision,
+    SnakeLadder
+    RateLimiter
+    MovieBooking
 
 
 

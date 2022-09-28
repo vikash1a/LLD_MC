@@ -24,9 +24,28 @@ services,
              
 
     viewTicket(ticketId) => status,List<Seat>,List<passenger>,noOfSeat,TrainJourneyId,Class,FromStation, ToStation
+        query,
+            select * from Booking where Id = @BookingId
+            inner join BookedPassenger on @BookingId = BookedPassenger.BookingId 
+            inner join Passenger on BookedPassenger.passengerId = passenger.id
     cancelTicket(ticketId)=> status
     searchTrains(FromStation, ToStation,Date,class (optional)) =>
         List<TrainJourney(Id,TrainName,arrivalTime,DepartureTime,List<AvlSeat(class, SeatNo)>)>
+
+        query,
+            select TrainJourneyInstance.id, Train.Name, Stoppage.arrivalTime , Stoppage.departureTime, 
+            SeatsAvailable.noOfSeatAvailable,SeatsAvailable.noOfCoachAvailable   from Stops
+            inner join Stoppage on  Stops.Id= Stoppage.stopId 
+            inner join Stoppage as Stoppage2 on  Stoppage.TrainJourneyId = Stoppage2.TrainJourneyId
+            inner join Stops as Stops2 on    Stoppage2.stopId = Stops2.Id
+            where Stops.Name = @fromStation and Stops2.Name = @toStation
+            inner join TrainJourneyInstance on Stoppage.TrainJourneyId = TrainJourneyInstance.TrainJourneyId
+            where TrainJourneyInstance.startDate >= @Date ans TrainJourneyInstance.startDate <= @(Date+7days)
+            inner join SeatsAvailable on TrainJourneyInstance.id = SeatsAvailable.TrainJourneyInstanceId
+            where SeatsAvailable.class = @class and SeatsAvailable.fromStation = @fromStation and SeatsAvailable.toStation = @toStation
+
+            //improvement 
+            have a list of train id precalculated from and to station
 
 model,
     Train - Id, Name, Number, Type (express, superfast)
