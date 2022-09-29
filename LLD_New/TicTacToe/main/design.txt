@@ -8,3 +8,5 @@ Game
     start
 
 //console writeline would not work in unit test
+improvement
+    separate layer
