@@ -1,14 +1,5 @@
-﻿//Improved Solution
-// next step 
-/*
-create a new model - vending machine-> state,cash,name,id
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LLD_CacheSystem
 {
@@ -17,32 +8,11 @@ namespace LLD_CacheSystem
             Console.WriteLine("Program is working");
             DiContainer diContainer = new DiContainer();
             IVendingMachine vendingMachine = diContainer.vendingMachine;
-            //IVendingMachine vendingMachine = new VendingMachine();
             vendingMachine.SelectItem(1);
-            vendingMachine.SelectItem(1);
+            vendingMachine.RecordPayment(new Payment(){id = 1, amount=100,payemntMethod="online"});
+            vendingMachine.Checkout();
+            // vendingMachine.SelectItem(1);
             return;
-        }
-        private async Task<string> callApiAsync(){
-            var client = new HttpClient();
-            //
-            var url = "";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get,url);
-            httpRequestMessage.Headers.Add("k","v");
-            var resp = await client.SendAsync(httpRequestMessage);
-            var mes = resp.Content.ReadAsStringAsync();
-
-            //post
-              url = "";
-             httpRequestMessage = new HttpRequestMessage(HttpMethod.Get,url);
-             StringContent stringContent  =  new StringContent("",Encoding.UTF8,"application/json");
-             httpRequestMessage.Content = stringContent;
-            httpRequestMessage.Headers.Add("k","v");
-             resp = await client.SendAsync(httpRequestMessage);
-             mes = resp.Content.ReadAsStringAsync();
-
-            return "";
-
-
         }
     }
 
@@ -58,24 +28,115 @@ namespace LLD_CacheSystem
             paymentRepo = new PaymentRepo();
             vendingMachine = new VendingMachine(itemRepo,slotRepo,paymentRepo);
         }
-
     }
-    //
-    public enum State{
-        Free ,
-        ItemSelected ,
-        PaymentDone 
-    }
-
     //interface
     public interface IVendingMachine
     {
-        public void SelectItem(int slotId);
+        public Item SelectItem(int slotId);
         public void RecordPayment(Payment payment);
         public void Checkout();
         public void Reset();
     }
+    public class VendingMachineFreeState : IVendingMachine
+    {
+        private readonly ISlotRepo slotRepo;
+        private readonly IItemRepo itemRepo;
 
+        public VendingMachineFreeState(ISlotRepo slotRepo,IItemRepo itemRepo)
+        {
+            this.slotRepo = slotRepo;
+            this.itemRepo = itemRepo;
+        }
+        public void Checkout()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RecordPayment(Payment payment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Item SelectItem(int slotId)
+        {
+            Item selectedItem = null;
+            Slot slot = slotRepo.GetSlot(slotId);
+            if(slot.isEmpty){
+                Console.WriteLine("Slot is Empty");
+                return selectedItem;
+            }
+            else{
+                selectedItem = itemRepo.GetItem(slot.itemId);
+                slot.isEmpty=true;
+                itemRepo.RemoveItem(slot.itemId);
+                Console.WriteLine("item selected - "+slot.itemId);
+                return selectedItem;
+            }
+        }
+    }
+    public class VendingMachineSelectedState : IVendingMachine
+    {
+        private readonly IPaymentRepo paymentRepo;
+
+        public VendingMachineSelectedState(IPaymentRepo paymentRepo)
+        {
+            this.paymentRepo = paymentRepo;
+        }
+        public void Checkout()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RecordPayment(Payment payment)
+        {
+            paymentRepo.AddPayment(payment);
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Item SelectItem(int slotId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class VendingMachinePaymentDoneState : IVendingMachine
+    {
+        private readonly ISlotRepo slotRepo;
+        private readonly int slotId;
+
+        public VendingMachinePaymentDoneState(ISlotRepo slotRepo, int slotId)
+        {
+            this.slotRepo = slotRepo;
+            this.slotId = slotId;
+        }
+        public void Checkout()
+        {
+            slotRepo.RemoveSlot(slotId);
+        }
+
+        public void RecordPayment(Payment payment)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Item SelectItem(int slotId)
+        {
+            throw new NotImplementedException();
+        }
+    }
     //implementaion
     public class VendingMachine : IVendingMachine
     {
@@ -83,15 +144,15 @@ namespace LLD_CacheSystem
         private  IItemRepo itemRepo;
         private  ISlotRepo slotRepo;
         private  IPaymentRepo paymentRepo;
-        private State state ;
-        private Item selectedItem = null;
+        private IVendingMachine vendingMachineState;
+        private int slotId;
         
         public VendingMachine (IItemRepo itemRepo,ISlotRepo slotRepo,IPaymentRepo paymentRepo){
             this.itemRepo = itemRepo;
             this.slotRepo = slotRepo;
             this.paymentRepo = paymentRepo;
             this.seedData();
-            this.state = State.Free;
+            this.vendingMachineState = new VendingMachineFreeState(slotRepo,itemRepo);
         }
         private void seedData(){
             itemRepo.AddItem(new Item(){id =1,price = 20,name="coke"});
@@ -100,33 +161,26 @@ namespace LLD_CacheSystem
             slotRepo.AddSlot(new Slot(){id =2,itemId=2,isEmpty=false});
             return;
         }
-        public void SelectItem(int slotId){
-            if(state == State.Free){
-                Slot slot = slotRepo.GetSlot(slotId);
-                if(slot.isEmpty){
-                    Console.WriteLine("Slot is Empty");return;
-                }
-                else{
-                    selectedItem = itemRepo.GetItem(slot.itemId);
-                    slot.isEmpty=true;
-                    itemRepo.RemoveItem(slot.itemId);
-                    Console.WriteLine("item selected - "+slot.itemId);
-                    return;
-                }
-
-            }
-            else{
-                Console.WriteLine("Vedning machine is not free");
-            }
-            return;
+        public Item SelectItem(int slotId){
+            this.slotId = slotId;
+            var result =  this.vendingMachineState.SelectItem(slotId);
+            this.vendingMachineState = new VendingMachineSelectedState(paymentRepo);
+            return result;
+            
         }
         public void RecordPayment(Payment payment){
-            return;
+            this.vendingMachineState.RecordPayment(payment);
+            Console.WriteLine("payment done");
+            this.vendingMachineState = new VendingMachinePaymentDoneState(slotRepo,slotId);
         }
         public void Checkout(){
-            return;
+            this.vendingMachineState.Checkout();
+            Console.WriteLine("checkout done");
+            this.Reset();
+            this.vendingMachineState = new VendingMachineFreeState(slotRepo,itemRepo);
         }
         public void Reset(){
+            slotId = 0;
             return;
         }
         
@@ -203,7 +257,3 @@ namespace LLD_CacheSystem
         public string payemntMethod {get;set;}
     }
 }
-
-
-
-
